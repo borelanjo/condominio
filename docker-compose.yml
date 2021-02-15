@@ -3,8 +3,6 @@ services:
     image: 'borelanjo/condominio:0.0.1-SNAPSHOT'
     networks:
       - spring-boot-mysql-network
-    build:
-      context: .
     ports:
       - "8080:8080"
     depends_on:
