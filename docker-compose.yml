@@ -1,0 +1,20 @@
+services:
+  app:
+    image: 'borelanjo/condominio:0.0.1-SNAPSHOT'
+    networks:
+      - spring-boot-mysql-network
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/condominio?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+  db:
+    image: 'mysql'
+    networks:
+      - spring-boot-mysql-network
