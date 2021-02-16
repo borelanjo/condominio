@@ -50,7 +50,7 @@ SPRING_DATASOURCE_USERNAME = <<usuario_do_banco>>
 SPRING_DATASOURCE_PASSWORD = <<senha_do_banco>>
 ```
 
-> Caso você tenha criado um banco de dados com o nome "condominio" e o usuário e senha do seu banco de dados forem "root", você não precisa criar nenhuma variável de ambiente. Há outras variáveis que podem ser definidas, consulte o arquivo [application.properties](src/main/resources/application.properties) para detalhes.
+> Caso você tenha criado um banco de dados com o nome "condominio" e o usuário e senha do seu banco de dados forem "root", você não precisa criar nenhuma variável de ambiente. Há outras variáveis que podem ser definidas, consulte o arquivo [application.properties](src/main/resources/application.yml) para detalhes.
 
 #### Obtendo uma cópia
 
