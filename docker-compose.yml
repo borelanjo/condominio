@@ -1,18 +1,57 @@
+version: '3.3'
+
 services:
-  app:
-    image: 'borelanjo/condominio:0.0.1-SNAPSHOT'
+
+#############################################################
+######################### DATABASES #########################
+#############################################################
+
+  db-condominio:
+    image: 'mysql'
+    command: ["--log_bin_trust_function_creators=1"]
+    restart: always
     networks:
-      - spring-boot-mysql-network
+      - condominio-network
+    environment:
+        MYSQL_DATABASE: 'db-condominio'
+        # So you don't have to use root, but you can if you like
+        MYSQL_USER: 'condominio'
+        # You can use whatever password you like
+        MYSQL_PASSWORD: 'hn+YgnVb9e=aXLmG'
+        # Password for root access
+        MYSQL_ROOT_PASSWORD: 'TN^8mE47TRn87f_4'
+    volumes:
+        - data-mysql-db:/var/lib/mysql
+    ports:
+        - "3306:3306"
+
+
+#############################################################
+######################### APP ###############################
+#############################################################
+
+  condominio-app:
+    image: 'borelanjo/condominio:1.0.0'
+    networks:
+      - condominio-network
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      - db-condominio
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/condominio?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_URL: jdbc:mysql://db-condominio:3306/db-condominio?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: condominio
+      SPRING_DATASOURCE_PASSWORD: hn+YgnVb9e=aXLmG
 
-  db:
-    image: 'mysql'
-    networks:
-      - spring-boot-mysql-network
+#############################################################
+######################### NETWORK ###########################
+#############################################################
+networks:
+  condominio-network:
+    driver: "bridge"
+
+#############################################################
+######################### VOLUME ############################
+#############################################################
+volumes:
+  data-mysql-db:
